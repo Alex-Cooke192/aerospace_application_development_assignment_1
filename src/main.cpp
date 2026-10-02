@@ -1,11 +1,18 @@
 #include <iostream>
 #include "sitl-sensors/fuel-sensor.h"
 #include "sitl-sensors/air-speed-sensor.h"
+#include "event-bus/event-bus.h"
+#include "fuel/fuel-service.h"
+#include "sensor-health/sensor-health-service.h"
+
 
 int main()
 {
     FuelSensor fuelSensor;
     AirSpeedSensor airSpeedSensor;
+    EventBus eventBus; 
+    FuelService fuelService(eventBus); 
+    SensorHealthService sensorHealthService(eventBus);
 
     bool running = true;
 

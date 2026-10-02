@@ -10,4 +10,10 @@ add_executable(fuel_management_system
     src/event-bus/event-bus.cpp
     ) # assumes all cpp files are in a directory called `src`
 
+target_include_directories(
+    fuel_management_system
+    PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+)
+
 target_compile_features( fuel_management_system PUBLIC cxx_std_26 ) # sets the C++ standard to C++26, as agreed in design report. 

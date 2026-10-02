@@ -1,5 +1,7 @@
 #include <functional>
 
+#pragma once
+
 class EventBus {
 public:
     template<typename Event>
