@@ -1,3 +1,5 @@
+#include "event-bus.h"
+
 class SensorHealthService {
 public:
     SensorHealthService(EventBus& bus) : bus(bus) {}
