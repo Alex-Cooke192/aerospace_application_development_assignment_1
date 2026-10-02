@@ -1,5 +1,4 @@
-#ifndef FUEL_SENSOR_H
-#define FUEL_SENSOR_H
+#pragma once
 
 #include "sensor.h"
 
@@ -11,5 +10,3 @@ public:
 private:
     float fuelLevel;
 };
-
-#endif // FUEL_SENSOR_H

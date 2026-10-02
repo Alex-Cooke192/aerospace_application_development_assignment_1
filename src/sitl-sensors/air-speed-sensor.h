@@ -1,5 +1,4 @@
-#ifndef AIR_SPEED_SENSOR_H
-#define AIR_SPEED_SENSOR_H
+#pragma once
 
 #include "sensor.h"
 
@@ -11,5 +10,3 @@ public:
 private:
     float airSpeed;
 };
-
-#endif // AIR_SPEED_SENSOR_H
