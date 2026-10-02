@@ -1,14 +1,6 @@
-#include "sensor.h"
+#include "fuel-sensor.h"
 #include <stdlib.h> 
-
-class FuelSensor : public Sensor {
-public:
-    FuelSensor();
-    float GetData() override;
-    void PrintData() override;
-private:
-    float fuelLevel;
-}
+#include <iostream>
 
 float FuelSensor::GetData(float minimum, float maximum) {
     // Generate a random fuel level between the minimum and maximum values
