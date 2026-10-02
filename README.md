@@ -17,7 +17,7 @@ This repository contains the Fuel & Range Management System as produced for Aero
 ## Building & compiling the program
 
 The `build-and-run-project.sh` file automates the integration & deployment process, and can be ran by running the following command whilst in the project root:
-bash```
+```bash
 ./run-and-build-project.sh
 ```
 
