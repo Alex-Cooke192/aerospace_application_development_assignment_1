@@ -11,13 +11,14 @@ int main() {
     float minimumAirSpeed = 0.0f; // Minimum air speed
     float maximumAirSpeed = 300.0f; // Maximum air speed
 
-    for (int i=0; i<10; i++) {
+    bool running = true;
+
+    while (running) {
         fuelSensor.GetData(minimumFuelLevel, maximumFuelLevel);
         fuelSensor.PrintData();
     
         airSpeedSensor.GetData(minimumAirSpeed, maximumAirSpeed);
         airSpeedSensor.PrintData();
     }
-    return 0;  
 }
 
