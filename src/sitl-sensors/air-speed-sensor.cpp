@@ -2,6 +2,10 @@
 #include <iostream>
 #include "air-speed-sensor.h"
 
+AirSpeedSensor::AirSpeedSensor() : airSpeed(0.0f) {
+    // Initialise air speed to 0.0
+}
+
 float AirSpeedSensor::GetData(float minimum, float maximum) {
     // Generate a random air speed between the minimum and maximum values
     airSpeed = minimum + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maximum - minimum)));
