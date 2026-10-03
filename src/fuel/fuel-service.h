@@ -3,7 +3,7 @@
 
 class FuelService {
 public:
-    FuelService(EventBus& bus) : bus(bus) {};
+    FuelService(EventBus& bus);
     void Subscribe(); 
     
     void UpdateFuelLevel(float New_Fuel_Level);
