@@ -1,28 +1,31 @@
 // Events.hpp
+#include "fuel/fuel-state.h"
 
 #pragma once
 
 struct FuelLevelChanged
 {
-    double litres;
+    float New_Fuel_Level;
 };
 
 struct FuelConsumptionChanged
 {
-    double litresPer100Km;
+    float New_Fuel_Consumption;
 };
 
 struct RangeChanged
 {
-    double rangeKm;
+    double New_Range;
 };
 
 struct LowFuelWarningRaised
 {
+    FuelState fuelState;
 };
 
 struct LowFuelWarningCleared
 {
+    FuelState fuelState; 
 };
 
 struct FuelSensorFaultDetected

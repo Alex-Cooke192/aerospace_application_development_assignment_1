@@ -1,8 +1,11 @@
 #include "event-bus/event-bus.h"
+#include "fuel-state.h"
 
 class FuelService {
 public:
-    FuelService(EventBus& bus) : bus(bus) {}
+    FuelService(EventBus& bus) : bus(bus) {};
+    void Subscribe(); 
+    
     void UpdateFuelLevel(float New_Fuel_Level);
     void UpdateFuelConsumption(float New_Fuel_Consumption);
     void RaiseLowFuelWarning();
@@ -14,5 +17,5 @@ private:
 
     float Fuel_Level = 0.0;
     float Fuel_Consumption = 0.0;
-    enum FuelState {NORMAL, WARN, REFUEL} Fuel_State = NORMAL;
+    FuelState fuelState = FuelState::NORMAL; 
 };
