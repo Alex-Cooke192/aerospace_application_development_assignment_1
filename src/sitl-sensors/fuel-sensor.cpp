@@ -23,6 +23,7 @@ float FuelSensor::GetFuelLevelData(float minimum, float maximum) {
 float FuelSensor::GetFuelConsumptionData(float minimum, float maximum) {
     float fuelConsumption = minimum + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maximum - minimum)));
     bus.publish(NewFuelConsumptionSensorOutput{fuelConsumption});
+    return fuelConsumption; 
 }
 
 void FuelSensor::PrintData() {
