@@ -4,6 +4,8 @@
 #include "event-bus/event-bus.h"
 #include "fuel/fuel-service.h"
 #include "sensor-health/sensor-health-service.h"
+#include "event-bus/events.h"
+#include "fuel-display-service.h"
 
 
 int main()
@@ -13,6 +15,7 @@ int main()
     EventBus eventBus; 
     FuelService fuelService(eventBus); 
     SensorHealthService sensorHealthService(eventBus);
+    FuelDisplayService fuelDisplay(eventBus); 
 
     bool running = true;
 
