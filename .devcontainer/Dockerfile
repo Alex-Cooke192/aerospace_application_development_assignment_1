@@ -29,10 +29,3 @@ COPY base-scripts/install-vcpkg.sh /tmp/
 RUN chmod +x /tmp/install-vcpkg.sh \
     && ./tmp/install-vcpkg.sh ${USERNAME} \
     && rm -f /tmp/install-vcpkg.sh
-
-
-
-
-
-
-
