@@ -1,5 +1,5 @@
 #include "fuel-service.h"
-#include "events.h"
+#include "event-bus/events.h"
 #include "fuel-state.h"
 
 FuelService::FuelService(EventBus& bus) : bus(bus) {
