@@ -10,9 +10,9 @@
 
 int main()
 {
-    FuelSensor fuelSensor;
-    AirSpeedSensor airSpeedSensor;
     EventBus eventBus; 
+    FuelSensor fuelSensor(eventBus);
+    AirSpeedSensor airSpeedSensor(eventBus);
     FuelService fuelService(eventBus); 
     SensorHealthService sensorHealthService(eventBus);
     FuelDisplayService fuelDisplay(eventBus); 
@@ -37,12 +37,12 @@ int main()
         switch (choice)
         {
             case 1:
-                fuelSensor.GetData(50.0f, 100.0f);
+                fuelSensor.GetData();
                 fuelSensor.PrintData();
                 break;
 
             case 2:
-                airSpeedSensor.GetData(120.0f, 150.0f);
+                airSpeedSensor.GetData();
                 airSpeedSensor.PrintData();
                 break;
 

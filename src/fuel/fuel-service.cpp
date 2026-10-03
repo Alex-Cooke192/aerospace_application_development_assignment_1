@@ -6,29 +6,23 @@ FuelService::FuelService(EventBus& bus) : bus(bus) {
     this->Subscribe();
 }
 
-void FuelService::Subscribe() {
-    // Subscriptions to other services
-    bus.subscribe<FuelLevelChanged>(
-        [this](const FuelLevelChanged& event)
+// Subscriptions to other services
+void FuelService::Subscribe() { 
+    // Listen for new sensor outputs from the sensors
+    bus.subscribe<NewFuelLevelSensorOutput>(
+        [this](const NewFuelLevelSensorOutput& event)
         {
-            this->UpdateFuelLevel(event.New_Fuel_Level);
-        }
-    );
-
-    bus.subscribe<FuelConsumptionChanged>(
-        [this](const FuelConsumptionChanged& event)
-        {
-            this->UpdateFuelConsumption(event.New_Fuel_Consumption);
+            this->UpdateFuelLevel(event.Output_Fuel_Level);
+            this->UpdateFuelConsumption(event.Output_Fuel_Consumption); 
         }
     );
 }
-
-
 
 void FuelService::UpdateFuelLevel(float New_Fuel_Level) {
     if (this->Fuel_Level != New_Fuel_Level) {
         bus.publish(FuelLevelChanged{New_Fuel_Level}); 
         this->Fuel_Level = New_Fuel_Level; 
+        this->UpdateFuelRange(New_Fuel_Level);
     }
 } 
 
@@ -39,10 +33,10 @@ void FuelService::UpdateFuelConsumption(float New_Fuel_Consumption) {
     }
 }
 
-void FuelService::UpdateRange(float New_Fuel_Level) {
-    if (this->Fuel_Level != New_Fuel_Level) {
-        
-    }
+void FuelService::UpdateFuelRange(float New_Fuel_Level) {
+    float New_Range = New_Fuel_Level*Fuel_Efficiency; 
+    this->Fuel_Range = New_Range; 
+    bus.publish(FuelRangeChanged{New_Range}); 
 }
 
 void FuelService::ClearLowFuelWarning() {

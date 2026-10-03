@@ -1,16 +1,21 @@
 #include <stdlib.h> 
 #include <iostream>
 #include "air-speed-sensor.h"
+#include "event-bus/event-bus.h"
 
-AirSpeedSensor::AirSpeedSensor() : airSpeed(0.0f) {
-    // Initialise air speed to 0.0
+AirSpeedSensor::AirSpeedSensor(EventBus& bus) : bus(bus) {
 }
 
-float AirSpeedSensor::GetData(float minimum, float maximum) {
-    // Generate a random air speed between the minimum and maximum values
-    airSpeed = minimum + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maximum - minimum)));
-    return airSpeed;
+int AirSpeedSensor::GetData() {
+    GetAirSpeed(this->_Minimum_Airspeed, this->_Maximum_Airspeed); 
+    return 0; 
 };
+
+float AirSpeedSensor::GetAirSpeed(float minimum, float maximum) {
+     // Generate a random air speed between the minimum and maximum values
+    float airSpeed = minimum + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maximum - minimum)));
+    return airSpeed;
+}
 
 void AirSpeedSensor::PrintData() {
     // Print the current air speed
