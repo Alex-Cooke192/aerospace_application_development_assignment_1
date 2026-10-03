@@ -1,11 +1,13 @@
 #include <iostream>
+#include <thread>
+
 #include "sitl-sensors/fuel-sensor.h"
 #include "sitl-sensors/air-speed-sensor.h"
 #include "event-bus/event-bus.h"
 #include "fuel/fuel-service.h"
 #include "sensor-health/sensor-health-service.h"
 #include "event-bus/events.h"
-#include "fuel-display-service.h"
+#include "fuel-display/fuel-display-service.h"
 
 
 int main()
@@ -19,51 +21,19 @@ int main()
 
     bool running = true;
 
-    while (running)
-    {
-        std::cout << "\n=============================\n";
-        std::cout << " Aircraft Management System\n";
-        std::cout << "=============================\n";
-        std::cout << "1. Read Fuel Sensor\n";
-        std::cout << "2. Read Airspeed Sensor\n";
-        std::cout << "3. Show All Data\n";
-        std::cout << "4. Exit\n";
-        std::cout << "=============================\n";
-        std::cout << "Select option: ";
+    std::thread sensorThread([&]() {
+        while (running) {
+            fuelSensor.GetData();
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        }
+    });
 
-        int choice;
-        std::cin >> choice;
+    while (running) {
+        std::string command;
+        std::getline(std::cin, command);
 
-        switch (choice)
-        {
-            case 1:
-                fuelSensor.GetData();
-                fuelSensor.PrintData();
-                break;
-
-            case 2:
-                airSpeedSensor.GetData();
-                airSpeedSensor.PrintData();
-                break;
-
-            case 3:
-                std::cout << "\n--- Fuel Data ---\n";
-                fuelSensor.PrintData();
-
-                std::cout << "\n--- Airspeed Data ---\n";
-                airSpeedSensor.PrintData();
-                break;
-
-            case 4:
-                running = false;
-                std::cout << "Exiting...\n";
-                break;
-
-            default:
-                std::cout << "Invalid option.\n";
-                break;
+        if (command == "quit") {
+            running = false;
         }
     }
-
-    return 0;
 }
