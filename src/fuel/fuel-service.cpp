@@ -18,6 +18,9 @@ void FuelService::Subscribe() {
     );
 }
 
+// -----------------------------------------------------------------
+// Fuel Level Functions
+
 void FuelService::CheckFuelLevelChanged(float New_Fuel_Level) {
     if (this->Fuel_Level != New_Fuel_Level) {
         UpdateFuelLevel(New_Fuel_Level);
@@ -38,7 +41,7 @@ void FuelService::UpdateFuelLevel(float New_Fuel_Level) {
     CheckLowFuelClear(); 
 } 
 
-// ----------------------------------------------------------
+// ----------------------------------------------------------------------------------------
 // Fuel Range Function
 
 void FuelService::UpdateFuelRange(float New_Fuel_Level) {
@@ -66,7 +69,7 @@ void FuelService::UpdateFuelConsumption(float New_Fuel_Consumption) {
 }
 
 
-// -----------------------------------------------------
+// -----------------------------------------------------------------------------------------
 // Low fuel warnning checkers/transitions
 
 void FuelService::CheckLowFuelWarning() {
@@ -79,10 +82,10 @@ void FuelService::CheckLowFuelWarning() {
 }
 
 void FuelService::RaiseLowFuelWarning() {
-    bus.publish(LowFuelWarningRaised{}); 
+    bus.publish(LowFuelWarningRaised{FuelState::WARN, this->Fuel_Level}); 
 }
 
-// -----------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
 void FuelService::CheckLowFuelClear() {
     if (this->_Fuel_State == FuelState::WARN) {
@@ -94,5 +97,5 @@ void FuelService::CheckLowFuelClear() {
 }
 
 void FuelService::RaiseLowFuelWarningCleared() {
-    bus.publish(LowFuelWarningCleared{FuelState::NORMAL});
+    bus.publish(LowFuelWarningCleared{FuelState::NORMAL, this->Fuel_Level});
 }
