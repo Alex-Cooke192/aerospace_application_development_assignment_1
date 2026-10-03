@@ -5,6 +5,7 @@
 
 class FuelSensor : public Sensor {
 public:
+    // Sensors dont have subscriptions as they only output data
     FuelSensor(EventBus& bus);
     int GetData() override;
 

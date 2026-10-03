@@ -3,7 +3,7 @@
 
 #pragma once
 
-struct NewFuelLevelSensorOutput
+struct NewFuelSensorOutput
 {
     float Output_Fuel_Level;
     float Output_Fuel_Consumption; 
@@ -34,13 +34,13 @@ struct FuelRangeChanged
 
 struct LowFuelWarningRaised
 {
-    FuelState fuelState;
+    FuelState fuelState = FuelState::WARN;
     float Fuel_Level; 
 };
 
 struct LowFuelWarningCleared
 {
-    FuelState fuelState; 
+    FuelState fuelState = FuelState::NORMAL; 
     float Fuel_Level; 
 };
 

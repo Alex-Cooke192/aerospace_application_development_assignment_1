@@ -16,7 +16,7 @@ int FuelSensor::GetData() {
 float FuelSensor::GetFuelLevelData(float minimum, float maximum) {
     // Generate a random fuel level between the minimum and maximum values
     float fuelLevel = minimum + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maximum - minimum)));
-    bus.publish(NewFuelLevelSensorOutput{fuelLevel});
+    bus.publish(NewFuelSensorOutput{fuelLevel});
     return fuelLevel;
 }
 
