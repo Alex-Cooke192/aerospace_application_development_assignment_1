@@ -1,5 +1,4 @@
-#ifndef SENSOR_H
-#define SENSOR_H
+#pragma once
 
 class Sensor {
 public:
@@ -10,4 +9,3 @@ private:
     bool initialized = false;
 };
 
-#endif // SENSOR_H
