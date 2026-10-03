@@ -21,6 +21,14 @@ struct LowFuelWarningRaised
 {
 };
 
+struct LowFuelWarningCleared
+{
+};
+
 struct FuelSensorFaultDetected
 {
 };
+
+struct FuelSensorFaultCleared
+{
+}; 

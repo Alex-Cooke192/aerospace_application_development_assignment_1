@@ -1,9 +1,10 @@
-
+#include "sensor-health-service.h"
+#include "events.h"
 
 void SensorHealthService::RaiseSensorFaultWarning() {
-    bus.publish(SensorFaultWarningRaised{});
+    bus.publish(FuelSensorFaultDetected{});
 }
 
 void SensorHealthService::ClearSensorFaultWarning() {
-    bus.publish(SensorFaultWarningCleared{});  
+    bus.publish(FuelSensorFaultCleared{});  
 }

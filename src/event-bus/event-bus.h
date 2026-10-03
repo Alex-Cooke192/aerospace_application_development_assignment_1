@@ -1,3 +1,6 @@
+#include <functional>
+
+#pragma once
 
 class EventBus {
 public:
