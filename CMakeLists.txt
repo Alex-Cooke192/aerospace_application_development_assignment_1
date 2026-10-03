@@ -10,7 +10,8 @@ add_executable(fuel_management_system
     src/sitl-sensors/fuel-sensor.cpp 
     src/sitl-sensors/air-speed-sensor.cpp
     src/event-bus/event-bus.cpp
-    src/fuel-display-service.h
+    src/fuel-display/fuel-display-service.cpp
+    src/fuel/fuel-service.cpp
     ) # assumes all cpp files are in a directory called `src`
 
 target_include_directories(
