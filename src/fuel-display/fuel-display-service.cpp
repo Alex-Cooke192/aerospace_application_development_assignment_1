@@ -1,5 +1,5 @@
 #include "fuel-display-service.h"
-#include "events.h"
+#include "event-bus/events.h"
 #include <iostream>
 
 FuelDisplayService::FuelDisplayService(EventBus& eventBus) : eventBus(eventBus) {
@@ -45,30 +45,30 @@ void FuelDisplayService::Subscribe() {
 
 };
 
-void PrintFuelLevelChanged(float Original_Fuel_Level, float New_Fuel_Level) {
+void FuelDisplayService::PrintFuelLevelChanged(float Original_Fuel_Level, float New_Fuel_Level) {
     std::cout << "Fuel Level Changed: " << std::endl; 
     std::cout << "Original: " << std::to_string(Original_Fuel_Level) << std::endl;
     std::cout << "New:" << std::to_string(New_Fuel_Level) << std::endl; 
 }
 
-void PrintFuelConsumptionChanged(float Original_Fuel_Consumption, float New_Fuel_Consumption) {
+void FuelDisplayService::PrintFuelConsumptionChanged(float Original_Fuel_Consumption, float New_Fuel_Consumption) {
     std::cout << "Fuel Consumption Changed: " << std::endl; 
     std::cout << "Original: " << std::to_string(Original_Fuel_Consumption) << std::endl;
     std::cout << "New:" << std::to_string(New_Fuel_Consumption) << std::endl; 
 }
 
-void PrintRangeChanged(float Original_Range, float New_Range) {
+void FuelDisplayService::PrintRangeChanged(float Original_Range, float New_Range) {
     std::cout << "Fuel Consumption Changed: " << std::endl; 
     std::cout << "Original: " << std::to_string(Original_Range) << std::endl;
     std::cout << "New:" << std::to_string(New_Range) << std::endl; 
 }
 
-void PrintLowFuelWarning(float Fuel_Level) {
+void FuelDisplayService::PrintLowFuelWarning(float Fuel_Level) {
     std::cout << "WARNING: FUEL LOW" << std::endl;
     std::cout << "Fuel level: " << Fuel_Level << std::endl; 
 }
 
-void PrintLowFuelClear(float Fuel_Level) {
+void FuelDisplayService::PrintLowFuelClear(float Fuel_Level) {
     std::cout << "WARNING CLEARED: FUEL NORMAL" << std::endl; 
     std::cout << "Fuel level: " << Fuel_Level << std::endl; 
 }
