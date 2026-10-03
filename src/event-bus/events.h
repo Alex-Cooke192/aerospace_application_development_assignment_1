@@ -3,6 +3,17 @@
 
 #pragma once
 
+struct NewFuelLevelSensorOutput
+{
+    float Output_Fuel_Level;
+    float Output_Fuel_Consumption; 
+};
+
+struct NewFuelConsumptionSensorOutput
+{
+    float Output_Fuel_Consumption;
+};
+
 struct FuelLevelChanged
 {
     float New_Fuel_Level;
@@ -13,7 +24,7 @@ struct FuelConsumptionChanged
     float New_Fuel_Consumption;
 };
 
-struct RangeChanged
+struct FuelRangeChanged
 {
     double New_Range;
 };
