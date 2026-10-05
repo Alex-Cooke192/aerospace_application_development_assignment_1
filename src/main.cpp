@@ -8,14 +8,16 @@
 #include "sensor-health/sensor-health-service.h"
 #include "event-bus/events.h"
 #include "fuel-display/fuel-display-service.h"
+#include "aircraft-configuration.h"
+
 
 
 int main()
 {
     EventBus eventBus; 
-    FuelSensor fuelSensor(eventBus);
+    FuelSensor fuelSensor(eventBus, aircraftConfig);
     AirSpeedSensor airSpeedSensor(eventBus);
-    FuelService fuelService(eventBus); 
+    FuelService fuelService(eventBus, aircraftConfig); 
     SensorHealthService sensorHealthService(eventBus);
     FuelDisplayService fuelDisplay(eventBus); 
 
