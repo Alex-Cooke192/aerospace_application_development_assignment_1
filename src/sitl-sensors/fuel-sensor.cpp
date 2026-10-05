@@ -3,7 +3,11 @@
 #include <stdlib.h> 
 #include <iostream>
 
-FuelSensor::FuelSensor(EventBus& bus) : bus(bus) {
+FuelSensor::FuelSensor(EventBus& bus, AircraftConfiguration aircraftConfig) : bus(bus) {
+    this->_Fuel_Consumption_Maximum = aircraftConfig.fuelMetrics.fuel_consumption_maximum;
+    this->_Fuel_Consumption_Minimum = aircraftConfig.fuelMetrics.fuel_consumption_minimum;
+    this->_Fuel_Level_Maximum = aircraftConfig.fuelMetrics.fuel_capacity;
+    this->_Fuel_Level_Minimum = 0.0;
 }
 
 int FuelSensor::GetData() {

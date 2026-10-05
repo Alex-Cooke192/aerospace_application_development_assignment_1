@@ -2,8 +2,10 @@
 #include "event-bus/events.h"
 #include "fuel-state.h"
 
-FuelService::FuelService(EventBus& bus) : bus(bus) {
+FuelService::FuelService(EventBus& bus, AircraftConfiguration aircraftConfig) : bus(bus) {
     this->Subscribe();
+    this->Low_Fuel_Warning_Threshold = aircraftConfig.fuelThresholds.low_fuel_warning_threshold;
+    this->Fuel_Efficiency = aircraftConfig.fuelMetrics.fuel_efficiency;
 }
 
 // Subscriptions to other services
