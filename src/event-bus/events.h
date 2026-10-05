@@ -46,24 +46,21 @@ struct FuelRangeChanged
 
 struct LowFuelWarningRaised
 {
-    FuelState fuelState;
     float Fuel_Level; 
 };
 
 struct LowFuelWarningCleared
 {
-    FuelState fuelState; 
     float Fuel_Level; 
 };
 
 struct CriticalFuelWarningRaised
 {
-    FuelState fuelState;
     float Fuel_Level;
 };
 
-struct CriticalFuelWarningCleared{
-    FuelState fuelState;
+struct CriticalFuelWarningCleared
+{
     float Fuel_Level;
 };
 

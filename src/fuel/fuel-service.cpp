@@ -6,6 +6,8 @@
 FuelService::FuelService(EventBus& bus, AircraftConfiguration aircraftConfig) : bus(bus) {
     this->Subscribe();
     this->Low_Fuel_Warning_Threshold = aircraftConfig.fuelThresholds.low_fuel_warning_threshold;
+    this->FUEL_CAPACITY = aircraftConfig.fuelMetrics.fuel_capacity;
+    this->Fuel_Level = aircraftConfig.fuelMetrics.Initial_Fuel_Level;
 }
 
 // Subscriptions to other services
@@ -38,8 +40,10 @@ void FuelService::CheckFuelLevelChanged(float New_Fuel_Level) {
 }
 
 void FuelService::UpdateFuelLevel(float New_Fuel_Level) {
-    this->Fuel_Level == New_Fuel_Level;
-    bus.publish(FuelLevelChanged{New_Fuel_Level}); 
+    // If its the first iteration, skip
+    float Original_Fuel_Level = this->Fuel_Level;
+    this->Fuel_Level = New_Fuel_Level;
+    bus.publish(FuelLevelChanged{Original_Fuel_Level, New_Fuel_Level}); 
 } 
 
 // ----------------------------------------------------------------------------------
@@ -52,8 +56,9 @@ void FuelService::CheckAirSpeedChanged(float New_Air_Speed) {
 }
 
 void FuelService::UpdateAirSpeed(float New_Air_Speed) {
-    this->Air_Speed == New_Air_Speed;
-    bus.publish(AirSpeedChanged{New_Air_Speed});
+    float Original_Air_Speed = this->Air_Speed;
+    this->Air_Speed = New_Air_Speed;
+    bus.publish(AirSpeedChanged{Original_Air_Speed, New_Air_Speed});
 }
 
 // -----------------------------------------------------------------------------------
@@ -66,8 +71,9 @@ void FuelService::CheckFuelConsumptionChanged(float New_Fuel_Consumption) {
 }
 
 void FuelService::UpdateFuelConsumption(float New_Fuel_Consumption) {
-    bus.publish(FuelConsumptionChanged{New_Fuel_Consumption}); 
+    float Original_Fuel_Consumption = this->Fuel_Consumption;
     this->Fuel_Consumption = New_Fuel_Consumption; 
+    bus.publish(FuelConsumptionChanged{New_Fuel_Consumption}); 
 }
 
 // -----------------------------------------------------------------------------------
@@ -108,10 +114,11 @@ void FuelService::CheckLowFuelWarningCleared() {
 }
 
 void FuelService::ClearLowFuelWarning() {
-    this->fuelState == FuelState::NORMAL;
-    bus.publish(LowFuelWarningCleared{});
+    this->fuelState = FuelState::NORMAL;
+    bus.publish(LowFuelWarningCleared{this->Fuel_Level});
 }
 
+// -------------------------------------------------------------------------
 // RAISE
 
 void FuelService::CheckLowFuelWarning() {
@@ -123,6 +130,6 @@ void FuelService::CheckLowFuelWarning() {
 }
 
 void FuelService::RaiseLowFuelWarning() {
-    this->fuelState == FuelState::WARN; 
-    bus.publish(LowFuelWarningRaised{fuelState}); 
+    this->fuelState = FuelState::WARN; 
+    bus.publish(LowFuelWarningRaised{this->Fuel_Level}); 
 }
