@@ -3,9 +3,9 @@
 #include <random>
 #include "air-speed-sensor.h"
 #include "event-bus/event-bus.h"
-#include "events.h"
+#include "event-bus/events.h"
 
-AirSpeedSensor::AirSpeedSensor(EventBus& bus) : bus(bus) {
+AirSpeedSensor::AirSpeedSensor(EventBus& bus, AircraftConfiguration aircraftConfig) : bus(bus) {
 }
 
 int AirSpeedSensor::GetData() {
@@ -13,7 +13,7 @@ int AirSpeedSensor::GetData() {
     return 0; 
 };
 
-float AirSpeedSensor::GetAirSpeedData(float minimum, float maximum) {
+void AirSpeedSensor::GetAirSpeedData(float minimum, float maximum) {
     if (this->Air_Speed == 0.0) {
         // Generate a random air speed between the minimum and maximum values
         this->Air_Speed = minimum + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maximum - minimum)));

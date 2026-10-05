@@ -2,13 +2,14 @@
 
 #include "sensor.h"
 #include "event-bus/event-bus.h"
+#include "aircraft-configuration.h"
 
 class AirSpeedSensor : public Sensor { 
 public:
     // Sensors dont have subscriptions as they only output data
-    AirSpeedSensor(EventBus& bus);
+    AirSpeedSensor(EventBus& bus, AircraftConfiguration aircraftConfig);
     int GetData() override;
-    float GetAirSpeedData(float minimum, float maximum); 
+    void GetAirSpeedData(float minimum, float maximum); 
     void PrintData() override;
 private:
     float Air_Speed;

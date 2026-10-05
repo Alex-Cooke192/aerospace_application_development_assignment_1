@@ -20,10 +20,7 @@ public:
     void RaiseLowFuelWarning();
     void ClearLowFuelWarning();
 
-    // Overloading...
     void UpdateFuelRange(float New_Fuel_Level, float New_Air_Speed);
-    void UpdateFuelRange(float New_Fuel_Level); 
-    void UpdateFuelRange(float New_Air_Speed);
 
 private:
     EventBus& bus;

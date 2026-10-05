@@ -1,6 +1,8 @@
 
 // Aircraft configuration
 
+#pragma once
+
 struct FuelMetrics {
     float fuel_capacity = 250.0f; 
     float fuel_consumption_minimum = 0.01f;
@@ -33,7 +35,7 @@ struct AircraftConfiguration {
     FuelMetrics fuelMetrics;
     FuelThresholds fuelThresholds;
     Airspeeds airspeeds;
-    SensorMetrics SensorMetrics;
+    SensorMetrics sensorMetrics;
 
     AircraftConfiguration()
         : fuelMetrics(),

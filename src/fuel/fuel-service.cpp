@@ -1,6 +1,7 @@
 #include "fuel-service.h"
 #include "event-bus/events.h"
 #include "fuel-state.h"
+#include "aircraft-configuration.h"
 
 FuelService::FuelService(EventBus& bus, AircraftConfiguration aircraftConfig) : bus(bus) {
     this->Subscribe();
@@ -32,7 +33,7 @@ void FuelService::CheckFuelLevelChanged(float New_Fuel_Level) {
     if (this->Fuel_Level != New_Fuel_Level) {
         UpdateFuelLevel(New_Fuel_Level);
         CheckLowFuelWarning();
-        CheckLowFuelWarningCleared;
+        CheckLowFuelWarningCleared();
     }
 }
 
@@ -73,22 +74,22 @@ void FuelService::UpdateFuelConsumption(float New_Fuel_Consumption) {
 // Fuel Range 
 
 void FuelService::UpdateFuelRange(float New_Fuel_Level, float New_Air_Speed) {
-    float Endurance = New_Fuel_Level/this->Fuel_Consumption;
-    float New_Range = New_Air_Speed*Endurance;
-    this->Fuel_Range = New_Range; 
-    bus.publish(FuelRangeChanged{New_Range}); 
-}
-
-void FuelService::UpdateFuelLevel(float New_Fuel_Level) {
-    float Endurance = New_Fuel_Level/this->Fuel_Consumption;
-    float New_Range = this->Air_Speed*Endurance;
-    this->Fuel_Range = New_Range; 
-    bus.publish(FuelRangeChanged{New_Range}); 
-}
-
-void FuelService::UpdateFuelLevel(float New_Air_Speed) {
-    float Endurance = this->Fuel_Level/this->Fuel_Consumption;
-    float New_Range = New_Air_Speed*Endurance;
+    float New_Range;
+    if (this->Air_Speed != New_Air_Speed) {
+        if (this->Fuel_Level != New_Fuel_Level) {
+            // Both Air speed and Fuel level have changed
+            float Endurance = New_Fuel_Level/this->Fuel_Consumption;
+            float New_Range = New_Air_Speed*Endurance;
+        } else {
+            // Only air speed has changed
+            float Endurance = this->Fuel_Level/this->Fuel_Consumption;
+            float New_Range = New_Air_Speed*Endurance;
+        }
+    } else if (this->Fuel_Level != New_Fuel_Level) {
+        // Only Fuel Level has changed
+        float Endurance = New_Fuel_Level/this->Fuel_Consumption;
+        float New_Range = this->Air_Speed*Endurance;
+    }
     this->Fuel_Range = New_Range; 
     bus.publish(FuelRangeChanged{New_Range}); 
 }
