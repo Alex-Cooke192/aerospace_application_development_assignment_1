@@ -14,9 +14,10 @@
 
 int main()
 {
-    EventBus eventBus; 
+    EventBus eventBus;
+    AircraftConfiguration aircraftConfig;
     FuelSensor fuelSensor(eventBus, aircraftConfig);
-    AirSpeedSensor airSpeedSensor(eventBus);
+    AirSpeedSensor airSpeedSensor(eventBus, aircraftConfig);
     FuelService fuelService(eventBus, aircraftConfig); 
     SensorHealthService sensorHealthService(eventBus);
     FuelDisplayService fuelDisplay(eventBus); 
