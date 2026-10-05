@@ -10,7 +10,12 @@ struct FuelMetrics {
 
 struct Airspeeds {
     float minimum_airspeed = 50.0f; // kmph
-    float maximum_airspeed = 250.0f; // kmph
+    float maximum_airspeed = 400.0f; // kmph
+};
+
+struct SensorMetrics{
+    float fuel_sensor_variability = 0.03;
+    float air_speed_sensor_variability = 0.01;
 };
 
 struct FuelThresholds {
@@ -28,6 +33,7 @@ struct AircraftConfiguration {
     FuelMetrics fuelMetrics;
     FuelThresholds fuelThresholds;
     Airspeeds airspeeds;
+    SensorMetrics SensorMetrics;
 
     AircraftConfiguration()
         : fuelMetrics(),
