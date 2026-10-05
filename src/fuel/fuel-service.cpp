@@ -6,6 +6,7 @@
 FuelService::FuelService(EventBus& bus, AircraftConfiguration aircraftConfig) : bus(bus) {
     this->Subscribe();
     this->Low_Fuel_Warning_Threshold = aircraftConfig.fuelThresholds.low_fuel_warning_threshold;
+    this->Critical_Fuel_Warning_Threshold = aircraftConfig.fuelThresholds.critical_fuel_warning_threshold;
     this->FUEL_CAPACITY = aircraftConfig.fuelMetrics.fuel_capacity;
     this->Fuel_Level = aircraftConfig.fuelMetrics.Initial_Fuel_Level;
 }
@@ -34,8 +35,15 @@ void FuelService::Subscribe() {
 void FuelService::CheckFuelLevelChanged(float New_Fuel_Level) {
     if (this->Fuel_Level != New_Fuel_Level) {
         UpdateFuelLevel(New_Fuel_Level);
-        CheckLowFuelWarning();
-        CheckLowFuelWarningCleared();
+        if (this->fuelState == FuelState::NORMAL) {
+            CheckLowFuelWarning();
+            CheckCriticalFuelWarning();
+        } else if (this->fuelState == FuelState::WARN) {
+            CheckLowFuelWarningCleared();
+            CheckCriticalFuelWarning();
+        } else if (this->fuelState == FuelState::CRITICAL) {
+            CheckCriticalFuelWarningCleared();
+        }
     }
 }
 
@@ -122,7 +130,7 @@ void FuelService::ClearLowFuelWarning() {
 // RAISE
 
 void FuelService::CheckLowFuelWarning() {
-    if (this->fuelState == FuelState::NORMAL) {
+    if (this->fuelState == FuelState::NORMAL || this->fuelState == FuelState::CRITICAL) {
         if (this->Fuel_Level < this->Low_Fuel_Warning_Threshold) {
             RaiseLowFuelWarning();
         }
@@ -132,4 +140,41 @@ void FuelService::CheckLowFuelWarning() {
 void FuelService::RaiseLowFuelWarning() {
     this->fuelState = FuelState::WARN; 
     bus.publish(LowFuelWarningRaised{this->Fuel_Level}); 
+}
+
+
+// -------------------------------------------------------------------------
+// Critical fuel warning transitions
+
+// CLEAR
+
+void FuelService::CheckCriticalFuelWarningCleared() {
+    if (this->fuelState == FuelState::CRITICAL) {
+        if (this->Fuel_Level > this->Critical_Fuel_Warning_Threshold) {
+            // Clear Critical but move up to Low fuel warning
+            ClearCriticalFuelWarning();
+        }
+    }
+}
+
+void FuelService::ClearCriticalFuelWarning() {
+    this->fuelState = FuelState::WARN;
+    bus.publish(CriticalFuelWarningCleared{this->Fuel_Level});
+    bus.publish(LowFuelWarningRaised{this->Fuel_Level});
+}
+
+// -------------------------------------------------------------------------
+// RAISE
+
+void FuelService::CheckCriticalFuelWarning() {
+    if (this->fuelState == FuelState::WARN || this->fuelState == FuelState::NORMAL) {
+        if (this->Fuel_Level < this->Critical_Fuel_Warning_Threshold) {
+            RaiseCriticalFuelWarning();
+        }
+    }
+}
+
+void FuelService::RaiseCriticalFuelWarning() {
+    this->fuelState = FuelState::CRITICAL; 
+    bus.publish(CriticalFuelWarningRaised{this->Fuel_Level}); 
 }

@@ -2,5 +2,6 @@
 
 enum class FuelState{
     NORMAL, 
-    WARN
+    WARN,
+    CRITICAL
 }; 
