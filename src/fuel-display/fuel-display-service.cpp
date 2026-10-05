@@ -29,6 +29,20 @@ void FuelDisplayService::Subscribe() {
         }
     );
 
+    eventBus.subscribe<CriticalFuelWarningCleared>(
+        [this](const CriticalFuelWarningCleared& event)
+        {
+            this->PrintCriticalFuelWarningCleared(event.Fuel_Level);
+        }
+    );
+
+    eventBus.subscribe<CriticalFuelWarningRaised>(
+        [this](const CriticalFuelWarningRaised& event)
+        {
+            this->PrintCriticalFuelWarning(event.Fuel_Level);
+        }
+    );
+
     eventBus.subscribe<FuelConsumptionChanged>(
         [this](const FuelConsumptionChanged& event)
         {
@@ -64,11 +78,29 @@ void FuelDisplayService::PrintRangeChanged(float Original_Range, float New_Range
 }
 
 void FuelDisplayService::PrintLowFuelWarning(float Fuel_Level) {
-    std::cout << "WARNING: FUEL LOW" << std::endl;
+    std::cout << std::endl;
+    std::cout << "------ WARNING: FUEL LOW ------" << std::endl;
     std::cout << "Fuel level: " << Fuel_Level << std::endl; 
+    std::cout << std::endl;
 }
 
 void FuelDisplayService::PrintLowFuelClear(float Fuel_Level) {
-    std::cout << "WARNING CLEARED: FUEL NORMAL" << std::endl; 
+    std::cout << std::endl;
+    std::cout << "------ WARNING CLEARED: FUEL NORMAL ------" << std::endl; 
     std::cout << "Fuel level: " << Fuel_Level << std::endl; 
+    std::cout << std::endl;
+}
+
+void FuelDisplayService::PrintCriticalFuelWarning(float Fuel_Level) {
+    std::cout << std::endl;
+    std::cout << "------ WARNING: FUEL CRITICAL ------" << std::endl; 
+    std::cout << "Fuel level: " << Fuel_Level << std::endl; 
+    std::cout << std::endl;
+}
+
+void FuelDisplayService::PrintCriticalFuelWarningCleared(float Fuel_Level) {
+    std::cout << std::endl;
+    std::cout << "------ CRITICAL WARNING CLEARED: FUEL LOW ------" << std::endl; 
+    std::cout << "Fuel level: " << Fuel_Level << std::endl; 
+    std::cout << std::endl;
 }

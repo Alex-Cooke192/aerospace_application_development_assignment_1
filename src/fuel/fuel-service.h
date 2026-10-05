@@ -12,6 +12,8 @@ public:
     void CheckAirSpeedChanged(float New_Air_Speed);
     void CheckLowFuelWarning();
     void CheckLowFuelWarningCleared();
+    void CheckCriticalFuelWarning();
+    void CheckCriticalFuelWarningCleared();
     
     // Transitions/updates
     void UpdateFuelLevel(float New_Fuel_Level);
@@ -19,6 +21,9 @@ public:
     void UpdateAirSpeed(float New_Air_Speed);
     void RaiseLowFuelWarning();
     void ClearLowFuelWarning();
+    void RaiseCriticalFuelWarning();
+    void ClearCriticalFuelWarning();
+
 
     void UpdateFuelRange(float New_Fuel_Level, float New_Air_Speed);
 
@@ -26,6 +31,7 @@ private:
     EventBus& bus;
     // Preset values
     float Low_Fuel_Warning_Threshold = 20.0; // Standard default for low fuel in case not given
+    float Critical_Fuel_Warning_Threshold = 10.0; // Default
     
     // This value is read only, ued to calculate range etc. 
     //Fuel service should never modify this value
