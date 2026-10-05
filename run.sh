@@ -1,6 +1,6 @@
-# Script to automate CMake project build process
+#!/usr/bin/env bash
+set -euo pipefail
 
-rm -rf build && mkdir build && cd build
-cmake ..
-cmake --build .
-./fuel_management_system
+cmake -S . -B build
+cmake --build build
+./build/fuel_management_system
