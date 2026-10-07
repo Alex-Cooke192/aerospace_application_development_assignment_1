@@ -25,7 +25,7 @@ public:
     void ClearCriticalFuelWarning();
 
 
-    void UpdateFuelRange(float New_Fuel_Level, float New_Air_Speed);
+    void UpdateFuelRange(float New_Fuel_Level, float New_Air_Speed, float New_Fuel_Consumption);
 
 private:
     EventBus& bus;

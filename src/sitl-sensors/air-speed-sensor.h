@@ -12,11 +12,11 @@ public:
     void GetAirSpeedData(float minimum, float maximum); 
     void PrintData() override;
 private:
-    float Air_Speed;
+    float Air_Speed = 0.0;
     float Maximum_Air_Speed_Change = 5.0;
     float Air_Speed_Variance = 0.03; // For the purposes of the simulation, 
                                      // this is how severaly the altitude fluctubates
     EventBus& bus; 
-    float _Minimum_Airspeed; 
-    float _Maximum_Airspeed; 
+    float _Minimum_Airspeed = 50.0; 
+    float _Maximum_Airspeed = 500.0; 
 };

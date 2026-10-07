@@ -17,8 +17,13 @@ void FuelService::Subscribe() {
     bus.subscribe<NewFuelLevelSensorOutput>(
         [this](const NewFuelLevelSensorOutput& event)
         {
-            this->CheckFuelLevelChanged(event.Output_Fuel_Level);
-            this->CheckFuelConsumptionChanged(event.Output_Fuel_Consumption); 
+            this->CheckFuelLevelChanged(event.Output_Fuel_Level); 
+        }
+    );
+    bus.subscribe<NewFuelConsumptionSensorOutput>(
+        [this](const NewFuelConsumptionSensorOutput& event)
+        {
+            this->CheckFuelConsumptionChanged(event.Output_Fuel_Consumption);
         }
     );
     bus.subscribe<NewAirSpeedSensorOutput>(
@@ -52,6 +57,7 @@ void FuelService::UpdateFuelLevel(float New_Fuel_Level) {
     float Original_Fuel_Level = this->Fuel_Level;
     this->Fuel_Level = New_Fuel_Level;
     bus.publish(FuelLevelChanged{Original_Fuel_Level, New_Fuel_Level}); 
+    UpdateFuelRange(this->Fuel_Level, this->Air_Speed, this->Fuel_Consumption);
 } 
 
 // ----------------------------------------------------------------------------------
@@ -81,31 +87,23 @@ void FuelService::CheckFuelConsumptionChanged(float New_Fuel_Consumption) {
 void FuelService::UpdateFuelConsumption(float New_Fuel_Consumption) {
     float Original_Fuel_Consumption = this->Fuel_Consumption;
     this->Fuel_Consumption = New_Fuel_Consumption; 
-    bus.publish(FuelConsumptionChanged{New_Fuel_Consumption}); 
+    bus.publish(FuelConsumptionChanged{Original_Fuel_Consumption, New_Fuel_Consumption}); 
+    UpdateFuelRange(this->Fuel_Level, this->Air_Speed, this->Fuel_Consumption);
 }
 
 // -----------------------------------------------------------------------------------
 // Fuel Range 
 
-void FuelService::UpdateFuelRange(float New_Fuel_Level, float New_Air_Speed) {
-    float New_Range;
-    if (this->Air_Speed != New_Air_Speed) {
-        if (this->Fuel_Level != New_Fuel_Level) {
-            // Both Air speed and Fuel level have changed
-            float Endurance = New_Fuel_Level/this->Fuel_Consumption;
-            float New_Range = New_Air_Speed*Endurance;
-        } else {
-            // Only air speed has changed
-            float Endurance = this->Fuel_Level/this->Fuel_Consumption;
-            float New_Range = New_Air_Speed*Endurance;
-        }
-    } else if (this->Fuel_Level != New_Fuel_Level) {
-        // Only Fuel Level has changed
-        float Endurance = New_Fuel_Level/this->Fuel_Consumption;
-        float New_Range = this->Air_Speed*Endurance;
-    }
-    this->Fuel_Range = New_Range; 
-    bus.publish(FuelRangeChanged{New_Range}); 
+void FuelService::UpdateFuelRange(float New_Fuel_Level, float New_Air_Speed, float New_Fuel_Consumption)
+{
+    std::cout << "FUEL CONSUMPTION: " << New_Fuel_Consumption << std::endl;
+    float Endurance = New_Fuel_Level / New_Fuel_Consumption;
+    float New_Fuel_Range = New_Air_Speed * Endurance;
+    
+    float Original_Fuel_Range = this->Fuel_Range; 
+    this->Fuel_Range = New_Fuel_Range;
+
+    bus.publish(FuelRangeChanged{Original_Fuel_Range, New_Fuel_Range});
 }
 
 // -------------------------------------------------------------------------------

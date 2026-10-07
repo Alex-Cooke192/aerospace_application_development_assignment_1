@@ -26,8 +26,11 @@ int main()
 
     std::thread sensorThread([&]() {
         while (running) {
+            airSpeedSensor.GetData();
             fuelSensor.GetData();
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            // Add some gaps to make logs more readable
+            std::cout << std::endl << std::endl;
         }
     });
 
