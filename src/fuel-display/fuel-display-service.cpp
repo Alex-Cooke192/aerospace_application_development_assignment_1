@@ -60,21 +60,21 @@ void FuelDisplayService::Subscribe() {
 };
 
 void FuelDisplayService::PrintFuelLevelChanged(float Original_Fuel_Level, float New_Fuel_Level) {
-    std::cout << "Fuel Level Changed: " << std::endl; 
+    std::cout << "---FUEL LEVEL CHANGED--- " << std::endl; 
     std::cout << "Original: " << std::to_string(Original_Fuel_Level) << std::endl;
     std::cout << "New:" << std::to_string(New_Fuel_Level) << std::endl; 
     std::cout << std::endl;
 }
 
 void FuelDisplayService::PrintFuelConsumptionChanged(float Original_Fuel_Consumption, float New_Fuel_Consumption) {
-    std::cout << "Fuel Consumption Changed: " << std::endl; 
+    std::cout << "---FUEL CONSUMPTION CHANGED---" << std::endl; 
     std::cout << "Original: " << std::to_string(Original_Fuel_Consumption) << std::endl;
     std::cout << "New:" << std::to_string(New_Fuel_Consumption) << std::endl; 
         std::cout << std::endl;
 }
 
 void FuelDisplayService::PrintRangeChanged(float Original_Range, float New_Range) {
-    std::cout << "Fuel Range Changed: " << std::endl; 
+    std::cout << "---FUEL RANGE CHANGED---" << std::endl; 
     std::cout << "Original: " << std::to_string(Original_Range) << std::endl;
     std::cout << "New:" << std::to_string(New_Range) << std::endl; 
     std::cout << std::endl;

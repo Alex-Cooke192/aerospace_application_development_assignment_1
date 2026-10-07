@@ -27,6 +27,10 @@ public:
 
     void UpdateFuelRange(float New_Fuel_Level, float New_Air_Speed, float New_Fuel_Consumption);
 
+    // getters/setters
+    bool GetFuelRangeFlag() {return Fuel_Range_Changed_Flag;};
+    void SetFuelRangeFlag(bool New_Flag_Value) {this->Fuel_Range_Changed_Flag = New_Flag_Value;};
+
 private:
     EventBus& bus;
     // Preset values
@@ -36,6 +40,8 @@ private:
     // This value is read only, ued to calculate range etc. 
     //Fuel service should never modify this value
     float FUEL_CAPACITY = 100.0;
+
+    bool Fuel_Range_Changed_Flag = false;
 
     // Measured values
     float Air_Speed = 0.0;

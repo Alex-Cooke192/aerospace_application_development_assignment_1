@@ -96,14 +96,16 @@ void FuelService::UpdateFuelConsumption(float New_Fuel_Consumption) {
 
 void FuelService::UpdateFuelRange(float New_Fuel_Level, float New_Air_Speed, float New_Fuel_Consumption)
 {
-    std::cout << "FUEL CONSUMPTION: " << New_Fuel_Consumption << std::endl;
-    float Endurance = New_Fuel_Level / New_Fuel_Consumption;
-    float New_Fuel_Range = New_Air_Speed * Endurance;
-    
-    float Original_Fuel_Range = this->Fuel_Range; 
-    this->Fuel_Range = New_Fuel_Range;
+    if (this->Fuel_Range_Changed_Flag == false) {
+        float Endurance = New_Fuel_Level / New_Fuel_Consumption;
+        float New_Fuel_Range = New_Air_Speed * Endurance;
+        
+        float Original_Fuel_Range = this->Fuel_Range; 
+        this->Fuel_Range = New_Fuel_Range;
 
-    bus.publish(FuelRangeChanged{Original_Fuel_Range, New_Fuel_Range});
+        bus.publish(FuelRangeChanged{Original_Fuel_Range, New_Fuel_Range});
+        this->Fuel_Range_Changed_Flag = true;
+    }
 }
 
 // -------------------------------------------------------------------------------
