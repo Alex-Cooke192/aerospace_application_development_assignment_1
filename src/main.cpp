@@ -26,7 +26,7 @@ int main()
 
     std::thread sensorThread([&]() {
         while (running) {
-            std::cout << "=========FUEL LOG=========";
+            std::cout << "=========FUEL LOG=========" << std::endl;
             airSpeedSensor.GetData();
             fuelSensor.GetData();
             std::this_thread::sleep_for(std::chrono::milliseconds(2000));
