@@ -13,8 +13,11 @@ public:
     float GetFuelConsumptionData(float minimum, float maximum);
     void PrintData() override;
 private:
-    float fuelLevel;
+    float Fuel_Level = 0.0;
+    float Fuel_Consumption = 0.0;
     EventBus& bus; 
+    float _Fuel_Variance = 0.002; 
+    float _Maximum_Fuel_Level_Change = 1.0;
     float _Fuel_Level_Minimum = 0.0; // Default Value: Kg
     float _Fuel_Level_Maximum = 100.0; // Default Value: Kg
     float _Fuel_Consumption_Minimum = 0.0; // Default Value: Kg per second
