@@ -26,6 +26,7 @@ int main()
 
     std::thread sensorThread([&]() {
         while (running) {
+            fuelService.SetFuelRangeFlag(false);
             std::cout << "=========FUEL LOG=========" << std::endl;
             airSpeedSensor.GetData();
             fuelSensor.GetData();
