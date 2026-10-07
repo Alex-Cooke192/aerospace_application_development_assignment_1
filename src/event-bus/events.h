@@ -6,7 +6,6 @@
 struct NewFuelLevelSensorOutput
 {
     float Output_Fuel_Level;
-    float Output_Fuel_Consumption; 
 };
 
 struct NewFuelConsumptionSensorOutput
