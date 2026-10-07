@@ -72,7 +72,7 @@ void FuelDisplayService::PrintFuelConsumptionChanged(float Original_Fuel_Consump
 }
 
 void FuelDisplayService::PrintRangeChanged(float Original_Range, float New_Range) {
-    std::cout << "Fuel Consumption Changed: " << std::endl; 
+    std::cout << "Fuel Range Changed: " << std::endl; 
     std::cout << "Original: " << std::to_string(Original_Range) << std::endl;
     std::cout << "New:" << std::to_string(New_Range) << std::endl; 
 }

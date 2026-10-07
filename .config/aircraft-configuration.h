@@ -15,6 +15,8 @@ struct FuelMetrics {
 struct Airspeeds {
     float minimum_airspeed = 50.0f; // kmph
     float maximum_airspeed = 400.0f; // kmph
+    float maximum_airspeed_change = 0.005; // kmph
+    float airspeed_variance = 0.08; // Number between 0 and 1 to control fluctuation severity in airspeed
 };
 
 struct SensorMetrics{

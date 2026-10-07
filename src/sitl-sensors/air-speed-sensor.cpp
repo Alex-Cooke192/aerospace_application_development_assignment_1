@@ -6,6 +6,10 @@
 #include "event-bus/events.h"
 
 AirSpeedSensor::AirSpeedSensor(EventBus& bus, AircraftConfiguration aircraftConfig) : bus(bus) {
+    this->_Maximum_Airspeed = aircraftConfig.airspeeds.maximum_airspeed;
+    this->_Minimum_Airspeed = aircraftConfig.airspeeds.minimum_airspeed;
+    this->Maximum_Air_Speed_Change = aircraftConfig.airspeeds.maximum_airspeed_change;
+    this->Air_Speed_Variance = aircraftConfig.airspeeds.airspeed_variance;
 }
 
 int AirSpeedSensor::GetData() {
@@ -21,7 +25,7 @@ void AirSpeedSensor::GetAirSpeedData(float minimum, float maximum) {
         // Airspeed already set so use that to form the new value
         float Air_Speed_Diff = this->Air_Speed_Variance*(minimum + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maximum - minimum))));
         if (Air_Speed_Diff > this->Maximum_Air_Speed_Change) {
-            Air_Speed_Diff == Maximum_Air_Speed_Change;
+            Air_Speed_Diff = Maximum_Air_Speed_Change;
         }
         // Either add or subtract the difference
         static std::random_device rd;
